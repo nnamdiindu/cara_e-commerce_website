@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce | Cara </title>
+    <script src="https://kit.fontawesome.com/1ae310f4a8.js" crossorigin="anonymous"></script>
+    <script defer src="assets/script.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="shortcut icon" href="../static/images/png/favicon.png" type="image/x-icon">
+
+</head>
+<body>
+    
+    <header class="header">
+        <div class="logo" >
+            <img src="../static/images/png/logo.png" alt="">
+        </div>
+        <nav class="menu">
+           <a href="/" class="active"> Home </a>
+            <a href="{{ url_for('shop') }}">Shop</a>
+            <a href="{{ url_for('blog') }}">Blog</a> 
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('contact') }}">Contact</a>
+            {% if not current_user.is_authenticated %}
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('register') }}">Register</a>
+            {% else %}
+            <a href="{{ url_for('logout') }}">Logout</a>
+            {% endif %}
+            <i class="fa-solid fa-cart-shopping fa-beat"></i>
+           
+        </nav>
+        {% block content %}
+        {% endblock %}
+
+<footer>
+        <div class="foote">
+            <div class="foot">
+                <div class="logo">
+                    <img src="../static/images/png/logo.png" alt="">
+                </div>
+                <div>
+                    <h3>Contact</h3>
+                    <ul>
+                        <li>Address: <span>562 Wellington Road, Sreet 32 . Son Francisco</span></li>
+                        <li>Phone: <span>+01 2222 365/ (+91) 01 2345 6789</span></li>
+                        <li>Hours: <span>10:00 - 18-00. Mon - Sat</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h1>Follow Us</h1>
+                    <i></i>
+                </div>
+            </div>
+            <div class="foot2">
+                <h3>About</h3>
+                <ul>
+                    <li>About Us</li>
+                    <li>Delivery Information</li>
+                    <li>Privacy Policy</li>
+                    <li>Terms & Conditions</li>
+                    <li>Contact Us</li>
+                </ul>
+            </div>
+            <div class="foot3">
+                <h3>My Account</h3>
+                <ul>
+                    <li>Sign In</li>
+                    <li>View Cart</li>
+                    <li>My Wishlist</li>
+                    <li>Track My Order</li>
+                    <li>Help</li>
+                </ul>
+            </div>
+            <div class="foot4">
+                <h3>Install App</h3>
+                <h4>From App store or Google Play</h4>
+                <div class="icon">
+                    <div>
+                        <img src="../static/images/banner/app.jpg" alt="">
+                    </div>
+                    <div>
+                        <img src="../static/images/banner/play.jpg" alt="">
+                    </div>
+                </div>
+                <h4>Secured and Payment Gateways</h4>
+                <div>
+                    <img src="../static/images/banner/pay.png" alt="">
+                </div>
+            </div>
+        </div>
+       <div class="copy">
+        <div class="cop">
+        &copy;  2021. Techk-e4ma - E-COMMERCE
+        </div>
+        <div class="top">
+
+        </div>
+       </div>
+    </footer>
+</body>
+</html>

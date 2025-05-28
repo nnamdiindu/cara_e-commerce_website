@@ -1,36 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop</title>
-    <script src="https://kit.fontawesome.com/1ae310f4a8.js" crossorigin="anonymous"></script>
-    <script defer src="assets/script.js"></script>
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <header class="header">
-        <div class="logo" >
-            <img src="./png/logo.png" alt="">
-        </div>
-        <nav class="menu">
-           <a href="./index.html" class="active"> Home </a>
-            <a href="./shop.html">Shop</a>
-            <a href="./blog.html">Blog</a> 
-            <a href="./about.html">About</a>
-            <a href="./contact.html">Contact</a>
-            <i class="fa-solid fa-cart-shopping fa-beat"></i>
-           
-        </nav>
+{% extends "base.html" %}
+{% block content %}
         <!-- <div class="toggle"><a href="#"><i class="bx bx-moon toggle-icon"></i></a> </li>
         </div> -->
         <div class="menu-Icon">
             <i class='bx bx-menu-alt-right' id="menu-Icon"></i>
         </div>
     </header>
-    <section   class="shop-head" >
+    <section class="shop-head" >
         <div>
             <h2>#stayhome</h2>
             <h5>Save more like coupons & up to 70% off! </h5>
@@ -39,7 +15,7 @@
     <section>
         <div class="products">
             <div class="cartoon" id="ducts">
-                <img src="./product/f1.jpg" alt="">
+                <img src="../static/images/product/f1.jpg" alt="">
                 <h5>adidas</h5>
                 <h3>Cartoon Astronuat T-Shirts</h3>
                 <div class="star-rate">
@@ -55,7 +31,7 @@
                 </div>
             </div>
             <div class="cartoon1" id="ducts">
-                <img src="./product/f2.jpg" alt="">
+                <img src="../static/images/product/f2.jpg" alt="">
                 <h5>adidas</h5>
                 <h3>Cartoon Astronuat T-Shirts</h3>
                 <div class="star-rate">
@@ -71,7 +47,7 @@
                 </div>
             </div>
             <div class="cartoon2" id="ducts">
-                <img src="./product/f3.jpg" alt="">
+                <img src="../static/images/product/f3.jpg" alt="">
                 <h5>adidas</h5>
                 <h3>Cartoon Astronuat T-Shirts</h3>
                 <div class="star-rate">
@@ -87,7 +63,7 @@
                 </div>
             </div>
             <div class="cartoon3" id="ducts">
-                <img src="./product/f4.jpg" alt="">
+                <img src="../static/images/product/f4.jpg" alt="">
                 <h5>adidas</h5>
                 <h3>Cartoon Astronuat T-Shirts</h3>
                 <div class="star-rate">
@@ -104,7 +80,7 @@
             </div>
          
             <div class="cartoon4" id="ducts">
-                <img src="./product/f5.jpg" alt="">
+                <img src="../static/images/product/f5.jpg" alt="">
                 <h5>adidas</h5>
                 <h3>Cartoon Astronuat T-Shirts</h3>
                 <div class="star-rate">
@@ -120,7 +96,7 @@
                 </div>
             </div>
             <div class="cartoon5" id="ducts">
-                <img src="./product/f6.jpg" alt="">
+                <img src="../static/images/product/f6.jpg" alt="">
                 <h5>adidas</h5>
                 <h3>Cartoon Astronuat T-Shirts</h3>
                 <div class="star-rate">
@@ -136,7 +112,7 @@
                 </div>
             </div>
             <div class="cartoon6" id="ducts">
-                <img src="./product/f7.jpg" alt="">
+                <img src="../static/images/product/f7.jpg" alt="">
                 <h5>adidas</h5>
                 <h3>Cartoon Astronuat T-Shirts</h3>
                 <div class="star-rate">
@@ -152,7 +128,7 @@
                 </div>
             </div>
             <div class="cartoon7" id="ducts">
-                <img src="./product/f8.jpg" alt="">
+                <img src="../static/images/product/f8.jpg" alt="">
                 <h5>adidas</h5>
                 <h3>Cartoon Astronuat T-Shirts</h3>
                 <div class="star-rate">
@@ -172,7 +148,7 @@
     <section>
         <div class="products">
             <div class="cartoon" id="ducts">
-                <img src="./product/n8.jpg" alt="" >
+                <img src="../static/images/product/n8.jpg" alt="" >
                 <h5>adidas</h5>
                 <h3>Cartoon Astronuat T-Shirts</h3>
                 <div class="star-rate">
@@ -188,7 +164,7 @@
                 </div>
             </div>
             <div class="cartoon1" id="ducts">
-                <img src="./product/n2.jpg" alt="">
+                <img src="../static/images/product/n2.jpg" alt="">
                 <h5>adidas</h5>
                 <h3>Cartoon Astronuat T-Shirts</h3>
                 <div class="star-rate">
@@ -204,7 +180,7 @@
                 </div>
             </div>
             <div class="cartoon2" id="ducts">
-                <img src="./product/n3.jpg" alt="">
+                <img src="../static/images/product/n3.jpg" alt="">
                 <h5>adidas</h5>
                 <h3>Cartoon Astronuat T-Shirts</h3>
                 <div class="star-rate">
@@ -220,7 +196,7 @@
                 </div>
             </div>
             <div class="cartoon3" id="ducts">
-                <img src="./product/n4.jpg" alt="">
+                <img src="../static/images/product/n4.jpg" alt="">
                 <h5>adidas</h5>
                 <h3>Cartoon Astronuat T-Shirts</h3>
                 <div class="star-rate">
@@ -237,7 +213,7 @@
             </div>
          
             <div class="cartoon4" id="ducts">
-                <img src="./product/n5.jpg" alt="">
+                <img src="../static/images/product/n5.jpg" alt="">
                 <h5>adidas</h5>
                 <h3>Cartoon Astronuat T-Shirts</h3>
                 <div class="star-rate">
@@ -253,7 +229,7 @@
                 </div>
             </div>
             <div class="cartoon5" id="ducts">
-                <img src="./product/n6.jpg" alt="">
+                <img src="../static/images/product/n6.jpg" alt="">
                 <h5>adidas</h5>
                 <h3>Cartoon Astronuat T-Shirts</h3>
                 <div class="star-rate">
@@ -269,7 +245,7 @@
                 </div>
             </div>
             <div class="cartoon6" id="ducts">
-                <img src="./product/n7.jpg" alt="">
+                <img src="../static/images/product/n7.jpg" alt="">
                 <h5>adidas</h5>
                 <h3>Cartoon Astronuat T-Shirts</h3>
                 <div class="star-rate">
@@ -285,7 +261,7 @@
                 </div>
             </div>
             <div class="cartoon7" id="ducts">
-                <img src="./product/n8.jpg" alt="">
+                <img src="../static/images/product/n8.jpg" alt="">
                 <h5>adidas</h5>
                 <h3>Cartoon Astronuat T-Shirts</h3>
                 <div class="star-rate">
@@ -312,66 +288,4 @@
             <button type="submit">Sign Up</button>
         </div>
     </section>
-    <footer>
-        <div class="foote">
-            <div class="foot">
-                <div>
-                    <img src="./png/logo.png" alt="">
-                </div>
-                <div>
-                    <h3>Contact</h3>
-                    <ul>
-                        <li>Address: <span>562 Wellington Road, Sreet 32 . Son Francisco</span></li>
-                        <li>Phone: <span>+01 2222 365/ (+91) 01 2345 6789</span></li>
-                        <li>Hours: <span>10:00 - 18-00. Mon - Sat</span></li>
-                    </ul>
-                </div>
-                <div>
-                    <h1>Follow Us</h1>
-                    <i></i>
-                </div>
-            </div>
-            <div class="foot2">
-                <h3>About</h3>
-                <ul>
-                    <li>About Us</li>
-                    <li>Delivery Information</li>
-                    <li>Privacy Policy</li>
-                    <li>Terms & Conditions</li>
-                    <li>Contact Us</li>
-                </ul>
-            </div>
-            <div class="foot3">
-                <h3>My Account</h3>
-                <ul>
-                    <li>Sign In</li>
-                    <li>View Cart</li>
-                    <li>My Wishlist</li>
-                    <li>Track My Order</li>
-                    <li>Help</li>
-                </ul>
-            </div>
-            <div class="foot4">
-                <h3>Install App</h3>
-                <h4>From App store or Google Play</h4>
-                <div class="icon">
-                    <div>
-                        <img src="./banner/app.jpg" alt="">
-                    </div>
-                    <div>
-                        <img src="./banner/play.jpg" alt="">
-                    </div>
-                </div>
-                <h4>Secured and Payment Gateways</h4>
-                <div>
-                    <img src="./banner/pay.png" alt="">
-                </div>
-            </div>
-        </div>
-       <div class="copy">
-        &copy;  2021. Techk-e4ma - E-COMMERCE
-       </div>
-    </footer>
-    
-</body>
-</html>
+{% endblock %}

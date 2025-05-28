@@ -235,7 +235,7 @@ button  {
 }
 /* ===================SERVICES============ */
 .repair {
-    background-image: url("b2.jpg");
+    background-image: url("../images/b2.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     padding: 6rem;
@@ -405,7 +405,7 @@ footer .icon img {
 /* ============SHOP======PART======== */
 
 .shop-head{
-    background-image: url(/banner/b1.jpg);
+    background-image: url("../images/banner/b1.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     color: white;
@@ -422,7 +422,7 @@ footer .icon img {
 }
 /* ================BLOG==================== */
 .blog-head {
-    background-image: url(./banner/b19.jpg);
+    background-image: url("../images/banner/b19.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     color: white;
@@ -498,7 +498,7 @@ footer .icon img {
 }
 /* =============================ABOUT======================================== */
 .about-head {
-    background: url(png/banner.png);
+    background: url("../images/png/banner.png");
     background-position:center;
     padding: 6rem;
     color: white;

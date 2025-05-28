@@ -1,29 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <script defer src="assets/script.js"></script>
-    <script src="https://kit.fontawesome.com/1ae310f4a8.js" crossorigin="anonymous"></script>
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>Contact</title>
-</head>
-<body>
-    <header class="header">
-        <div class="logo" >
-            <img src="./png/logo.png" alt="">
-        </div>
-        <nav class="menu">
-           <a href="./index.html" class="active"> Home </a>
-            <a href="./shop.html">Shop</a>
-            <a href="./blog.html">Blog</a> 
-            <a href="./about.html">About</a>
-            <a href="./contact.html">Contact</a>
-            <i class="fa-solid fa-cart-shopping fa-beat"></i>
-           
-        </nav>
+{% extends "base.html" %}
+{% block content %}
         <!-- <div class="toggle"><a href="#"><i class="bx bx-moon toggle-icon"></i></a> </li>
         </div> -->
         <div class="menu-Icon">
@@ -109,66 +85,4 @@
             <button type="submit">Sign Up</button>
         </div>
     </section>
-    <footer>
-        <div class="foote">
-            <div class="foot">
-                <div>
-                    <img src="./png/logo.png" alt="">
-                </div>
-                <div>
-                    <h2>Contact</h2>
-                    <ul>
-                        <li>Address: <span>562 Wellington Road, Sreet 32 . Son Francisco</span></li>
-                        <li>Phone: <span>+01 2222 365/ (+91) 01 2345 6789</span></li>
-                        <li>Hours: <span>10:00 - 18-00. Mon - Sat</span></li>
-                    </ul>
-                </div>
-                <div>
-                    <h1>Follow Us</h1>
-                    <i></i>
-                </div>
-            </div>
-            <div class="foot2">
-                <h2>About</h2>
-                <ul>
-                    <li>About Us</li>
-                    <li>Delivery Information</li>
-                    <li>Privacy Policy</li>
-                    <li>Terms & Conditions</li>
-                    <li>Contact Us</li>
-                </ul>
-            </div>
-            <div class="foot3">
-                <h2>My Account</h2>
-                <ul>
-                    <li>Sign In</li>
-                    <li>View Cart</li>
-                    <li>My Wishlist</li>
-                    <li>Track My Order</li>
-                    <li>Help</li>
-                </ul>
-            </div>
-            <div class="foot4">
-                <h2>Install App</h2>
-                <h4>From App store or Google Play</h4>
-                <div class="icon">
-                    <div>
-                        <img src="./banner/app.jpg" alt="">
-                    </div>
-                    <div>
-                        <img src="./banner/play.jpg" alt="">
-                    </div>
-                </div>
-                <h4>Secured and Payment Gateways</h4>
-                <div>
-                    <img src="./banner/pay.png" alt="">
-                </div>
-            </div>
-        </div>
-       <div class="copy">
-        &copy;  2021. Techk-e4ma - E-COMMERCE
-       </div>
-    </footer>
-    
-</body>
-</html>
+{% endblock %}
