@@ -208,6 +208,7 @@ button  {
     grid-template-columns: repeat(4, 1fr);
     align-items: center;
     gap: 1.8rem;
+    /* overflow: hidden; */
 
     /* display: flex;
     width: 100%;
@@ -673,7 +674,7 @@ form button {
 
     }
 
-    .products {
+.products {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
@@ -809,14 +810,13 @@ form button {
     font-size: 1.6rem;
 
 }
-.products
-{
-    padding: 1rem;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: row;
-} 
+.products {
+     padding: 1rem; 
+     width: 100%; 
+     align-items: center; 
+     justify-content: space-between; 
+     flex-direction: row;
+}
 
 #ducts img {
     width: 100%;

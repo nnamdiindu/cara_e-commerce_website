@@ -13,11 +13,14 @@
         </div>
     </section>
     <section>
+        {% for collection in collections %}
         <div class="products">
             <div class="cartoon" id="ducts">
-                <img src="../static/images/product/f1.jpg" alt="">
-                <h5>adidas</h5>
-                <h3>Cartoon Astronuat T-Shirts</h3>
+                <img src="{{ url_for('serve_collection_image', id=collection.id) }}" 
+                 alt="{{ collection.brand_name }}" 
+                 loading="lazy">
+                <h5>{{ collection.brand_name }}</h5>
+                <h3>{{ collection.description }}</h3>
                 <div class="star-rate">
                     <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
                     <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
@@ -26,258 +29,21 @@
                     <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
                 </div>
                 <div class="doll">
-                    <h4>$78</h4>
+                    <h4>${{ "{:,.2f}".format(collection.amount) }}</h4>
                     <h4><i class="fa-solid fa-cart-plus fa-shake" style="color: #2f9d31;"></i></h4>
                 </div>
+                {% if current_user.id == 1 %}
+                <a href="{{ url_for('edit_collection', collection_id=collection.id) }}"><button>Edit</button></a>
+                <a href="{{ url_for('delete_collection', collection_id=collection.id) }}"><button>Delete</button></a>
+
+                
+                {% endif %}
             </div>
-            <div class="cartoon1" id="ducts">
-                <img src="../static/images/product/f2.jpg" alt="">
-                <h5>adidas</h5>
-                <h3>Cartoon Astronuat T-Shirts</h3>
-                <div class="star-rate">
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                </div>
-                <div class="doll">
-                    <h4>$78</h4>
-                    <h4><i class="fa-solid fa-cart-plus fa-bounce" style="color: #2f9d31;"></i></h4>
-                </div>
-            </div>
-            <div class="cartoon2" id="ducts">
-                <img src="../static/images/product/f3.jpg" alt="">
-                <h5>adidas</h5>
-                <h3>Cartoon Astronuat T-Shirts</h3>
-                <div class="star-rate">
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                </div>
-                <div class="doll">
-                    <h4>$78</h4>
-                    <h4><i class="fa-solid fa-cart-plus fa-flip" style="color: #2f9d31;"></i></h4>
-                </div>
-            </div>
-            <div class="cartoon3" id="ducts">
-                <img src="../static/images/product/f4.jpg" alt="">
-                <h5>adidas</h5>
-                <h3>Cartoon Astronuat T-Shirts</h3>
-                <div class="star-rate">
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                </div>
-                <div class="doll">
-                    <h4>$78</h4>
-                    <h4><i class="fa-solid fa-cart-plus fa-beat" style="color: #2f9d31;"></i></h4>
-                </div>
-            </div>
-         
-            <div class="cartoon4" id="ducts">
-                <img src="../static/images/product/f5.jpg" alt="">
-                <h5>adidas</h5>
-                <h3>Cartoon Astronuat T-Shirts</h3>
-                <div class="star-rate">
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                </div>
-                <div class="doll">
-                    <h4>$78</h4>
-                    <h4><i class="fa-solid fa-cart-plus fa-fade" style="color: #2f9d31;"></i></h4>
-                </div>
-            </div>
-            <div class="cartoon5" id="ducts">
-                <img src="../static/images/product/f6.jpg" alt="">
-                <h5>adidas</h5>
-                <h3>Cartoon Astronuat T-Shirts</h3>
-                <div class="star-rate">
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                </div>
-                <div class="doll">
-                    <h4>$78</h4>
-                    <h4><i class="fa-solid fa-cart-plus fa-spin" style="color: #2f9d31;"></i></h4>
-                </div>
-            </div>
-            <div class="cartoon6" id="ducts">
-                <img src="../static/images/product/f7.jpg" alt="">
-                <h5>adidas</h5>
-                <h3>Cartoon Astronuat T-Shirts</h3>
-                <div class="star-rate">
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                </div>
-                <div class="doll">
-                    <h4>$78</h4>
-                    <h4><i class="fa-solid fa-cart-plus fa-beat-fade" style="color: #2f9d31;"></i></h4>
-                </div>
-            </div>
-            <div class="cartoon7" id="ducts">
-                <img src="../static/images/product/f8.jpg" alt="">
-                <h5>adidas</h5>
-                <h3>Cartoon Astronuat T-Shirts</h3>
-                <div class="star-rate">
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                </div>
-                <div class="doll">
-                    <h4>$78</h4>
-                    <h4><i class="fa-solid fa-cart-plus fa-spin-reverse" style="color: #2f9d31;"></i></h4>
-                </div>
-            </div>
-          </div>
-    </section>
-    <section>
-        <div class="products">
-            <div class="cartoon" id="ducts">
-                <img src="../static/images/product/n8.jpg" alt="" >
-                <h5>adidas</h5>
-                <h3>Cartoon Astronuat T-Shirts</h3>
-                <div class="star-rate">
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                </div>
-                <div class="doll">
-                    <h4>$78</h4>
-                    <h4><i class="fa-solid fa-cart-plus fa-bounce" style="color: #2f9d31;"></i></h4>
-                </div>
-            </div>
-            <div class="cartoon1" id="ducts">
-                <img src="../static/images/product/n2.jpg" alt="">
-                <h5>adidas</h5>
-                <h3>Cartoon Astronuat T-Shirts</h3>
-                <div class="star-rate">
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                </div>
-                <div class="doll">
-                    <h4>$78</h4>
-                    <h4><i class="fa-solid fa-cart-plus fa-beat-fade" style="color: #2f9d31;"></i></h4>
-                </div>
-            </div>
-            <div class="cartoon2" id="ducts">
-                <img src="../static/images/product/n3.jpg" alt="">
-                <h5>adidas</h5>
-                <h3>Cartoon Astronuat T-Shirts</h3>
-                <div class="star-rate">
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                </div>
-                <div class="doll">
-                    <h4>$78</h4>
-                    <h4><i class="fa-solid fa-cart-plus fa-shake" style="color: #2f9d31;"></i></h4>
-                </div>
-            </div>
-            <div class="cartoon3" id="ducts">
-                <img src="../static/images/product/n4.jpg" alt="">
-                <h5>adidas</h5>
-                <h3>Cartoon Astronuat T-Shirts</h3>
-                <div class="star-rate">
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                </div>
-                <div class="doll">
-                    <h4>$78</h4>
-                    <h4><i class="fa-solid fa-cart-plus fa-flip" style="color: #2f9d31;"></i></h4>
-                </div>
-            </div>
-         
-            <div class="cartoon4" id="ducts">
-                <img src="../static/images/product/n5.jpg" alt="">
-                <h5>adidas</h5>
-                <h3>Cartoon Astronuat T-Shirts</h3>
-                <div class="star-rate">
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                </div>
-                <div class="doll">
-                    <h4>$78</h4>
-                    <h4><i class="fa-solid fa-cart-plus fa-flip" style="color: #2f9d31;"></i></h4>
-                </div>
-            </div>
-            <div class="cartoon5" id="ducts">
-                <img src="../static/images/product/n6.jpg" alt="">
-                <h5>adidas</h5>
-                <h3>Cartoon Astronuat T-Shirts</h3>
-                <div class="star-rate">
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                </div>
-                <div class="doll">
-                    <h4>$78</h4>
-                    <h4><i class="fa-solid fa-cart-plus fa-flip" style="color: #2f9d31;"></i></h4>
-                </div>
-            </div>
-            <div class="cartoon6" id="ducts">
-                <img src="../static/images/product/n7.jpg" alt="">
-                <h5>adidas</h5>
-                <h3>Cartoon Astronuat T-Shirts</h3>
-                <div class="star-rate">
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                </div>
-                <div class="doll">
-                    <h4>$78</h4>
-                    <h4><i class="fa-solid fa-cart-plus fa-spin-pulse" style="color: #2f9d31;"></i></h4>
-                </div>
-            </div>
-            <div class="cartoon7" id="ducts">
-                <img src="../static/images/product/n8.jpg" alt="">
-                <h5>adidas</h5>
-                <h3>Cartoon Astronuat T-Shirts</h3>
-                <div class="star-rate">
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                    <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
-                </div>
-                <div class="doll">
-                    <h4>$78</h4>
-                    <h4><i class="fa-solid fa-cart-plus fa-flip" style="color: #2f9d31;"></i></h4>
-                </div>
-            </div>
-          </div>
-    </section>
+            {% endfor %}
+        </section>
+
+
+
     <section class="signup">
         <div class="sign">
             <h2>Sign Up For Newsletters</h2>
