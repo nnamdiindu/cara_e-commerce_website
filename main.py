@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, url_for, redirect, flash, send_file
+from flask import Flask, render_template, request, url_for, redirect, flash, send_file, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import Mapped, mapped_column, DeclarativeBase
 from flask_login import login_required, login_user, current_user, LoginManager, logout_user, UserMixin
@@ -11,16 +11,26 @@ from werkzeug.utils import secure_filename
 from io import BytesIO
 #Imports forms
 from forms import AddCollection
+from paystack_api import PaystackAPI
 
 app = Flask(__name__)
 
 load_dotenv()
+
+
+# Paystack configuration
+PAYSTACK_SECRET_KEY = os.environ.get("PAYSTACK_SECRET_KEY")
+PAYSTACK_BASE_URL = "https://api.paystack.co"
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DB_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 bootstrap = Bootstrap5(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+
+# Initialize Paystack API
+paystack = PaystackAPI(PAYSTACK_SECRET_KEY)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -61,9 +71,9 @@ with app.app_context():
 def home():
     return render_template("index.html")
 
-@app.route("/collection_image/<int:id>")
-def serve_collection_image(id):
-    collection = db.get_or_404(StoreCollection, id)
+@app.route("/collection_image/<int:collection_id>")
+def serve_collection_image(collection_id):
+    collection = db.get_or_404(StoreCollection, collection_id)
     return send_file(
         BytesIO(collection.data),
         mimetype=collection.mimetype,
@@ -224,6 +234,19 @@ def delete_collection(collection_id):
 
     return redirect(url_for("shop"))
 
+
+@app.route("/checkout/<int:collection_id>")
+def checkout_page(collection_id):
+    selected_collection = db.get_or_404(StoreCollection, collection_id)
+
+    return render_template("checkout.html",
+                           collection=selected_collection,
+                           paystack_key=PAYSTACK_SECRET_KEY)
+
+# @app.route("/success")
+# def success():
+#     return render_template("success.html")
+
 @app.route("/blog")
 def blog():
     return render_template("blog.html")
@@ -235,6 +258,87 @@ def contact():
 @app.route("/about")
 def about():
     return render_template("about.html")
+
+
+
+
+@app.route("/process-payment", methods=["POST"])
+def process_payment():
+    """Handle payment processing"""
+    if request.method == "POST":
+        try:
+            # Get form data
+            email = request.form.get("email")
+            collection_id = request.form.get("collection_id")
+            quantity = int(request.form.get("quantity", 1))
+
+            selected_collection = db.get_or_404(StoreCollection, collection_id)
+            total_amount = selected_collection.amount * quantity
+
+            # Initialize payment
+            result = paystack.initialize_transaction(
+                email=email,
+                amount=total_amount
+            )
+
+            if result.get("status"):
+                # Store order in database (optional)
+                # order = Order(
+                #     product_id=product_id,
+                #     email=email,
+                #     amount=total_amount,
+                #     reference=result['data']['reference'],
+                #     status='pending'
+                # )
+                # db.session.add(order)
+                # db.session.commit()
+
+                # Redirect to Paystack
+                # return redirect(url_for("success"))
+                return redirect(result["data"]["authorization_url"])
+            else:
+                flash("Payment initialization failed. Please try again.")
+                return redirect(url_for("checkout_page", collection_id=collection_id))
+
+        except Exception as e:
+            flash(f"Error: {str(e)}")
+            return redirect(url_for("shop"))  # Your existing shop route
+
+
+@app.route("/payment/callback")
+def payment_callback():
+    """Handle payment callback from Paystack"""
+    reference = request.args.get("reference")
+
+    if not reference:
+        flash("Invalid payment reference")
+        return redirect(url_for("shop"))
+
+    # Verify payment
+    result = paystack.verify_transaction(reference)
+
+    if result.get("status") and result["data"]["status"] == "success":
+        # Payment successful - update your database
+        # order = Order.query.filter_by(reference=reference).first()
+        # if order:
+        #     order.status = 'completed'
+        #     order.paid_at = datetime.now()
+        #     db.session.commit()
+
+        flash("Payment successful! Your order has been confirmed.")
+        return render_template("success.html",
+                               transaction=result["data"])
+    else:
+        flash("Payment failed. Please try again.")
+        return render_template("payment_failed.html")
+
+
+@app.route("/verify-payment/<reference>")
+def verify_payment_ajax(reference):
+    """AJAX endpoint to verify payment status"""
+    result = paystack.verify_transaction(reference)
+    return jsonify(result)
+
 
 
 if __name__ == "__main__":
