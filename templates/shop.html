@@ -13,10 +13,17 @@
         </div>
     </section>
     <section>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <p class="flash text-danger">{{ message }}</p>
+            {% endfor %}
+            {% endif %}
+        {% endwith %}
         {% for collection in collections %}
         <div class="products">
             <div class="cartoon" id="ducts">
-                <img src="{{ url_for('serve_collection_image', id=collection.id) }}" 
+                <img src="{{ url_for('serve_collection_image', collection_id=collection.id) }}" 
                  alt="{{ collection.brand_name }}" 
                  loading="lazy">
                 <h5>{{ collection.brand_name }}</h5>
@@ -29,9 +36,12 @@
                     <i class="fa-sharp fa-solid fa-star" style="color: #ffc72e;"></i>
                 </div>
                 <div class="doll">
-                    <h4>${{ "{:,.2f}".format(collection.amount) }}</h4>
-                    <h4><i class="fa-solid fa-cart-plus fa-shake" style="color: #2f9d31;"></i></h4>
+                    <h4>₦{{ "{:,.2f}".format(collection.amount) }}</h4>
+                    <a href="{{ url_for('checkout_page', collection_id=collection.id) }}">
+                        <h4><i class="fa-solid fa-cart-plus fa-shake" style="color: #2f9d31;"></i></h4>
+                    </a>
                 </div>
+                    
                 {% if current_user.id == 1 %}
                 <a href="{{ url_for('edit_collection', collection_id=collection.id) }}"><button>Edit</button></a>
                 <a href="{{ url_for('delete_collection', collection_id=collection.id) }}"><button>Delete</button></a>
