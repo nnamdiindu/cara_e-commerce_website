@@ -1,10 +1,11 @@
 import os
+from datetime import datetime, timezone
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, url_for, redirect, flash, send_file, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import Mapped, mapped_column, DeclarativeBase
+from sqlalchemy.orm import Mapped, mapped_column, DeclarativeBase, relationship
 from flask_login import login_required, login_user, current_user, LoginManager, logout_user, UserMixin
-from sqlalchemy import String, Integer, ForeignKey, Float, LargeBinary, select
+from sqlalchemy import String, Integer, ForeignKey, Float, LargeBinary, select, DateTime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_bootstrap import Bootstrap5
 from werkzeug.utils import secure_filename
@@ -42,20 +43,53 @@ class Base(DeclarativeBase):
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
+
 class User(UserMixin, db.Model):
+    __tablename__ = "user"
+
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     name: Mapped[str] = mapped_column(String(50), nullable=False)
     email: Mapped[str] = mapped_column(String(50), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(String(50), nullable=False)
+    create_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
+
+    # Relationship to orders
+    orders: Mapped[list["Order"]] = relationship("Order", back_populates="user")
+
 
 class StoreCollection(db.Model):
+    __tablename__ = "store_collection"
+
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     brand_name: Mapped[str] = mapped_column(String(50), nullable=False)
     description: Mapped[str] = mapped_column(String(200), nullable=False)
     filename: Mapped[str] = mapped_column(String(100), nullable=False)
     amount: Mapped[float] = mapped_column(Float, nullable=False)
     data: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
-    mimetype = mapped_column(String(100), nullable=False)
+    mimetype: Mapped[str] = mapped_column(String(100), nullable=False)  # Fixed missing type annotation
+
+    # Relationship to orders
+    orders: Mapped[list["Order"]] = relationship("Order", back_populates="collection")
+
+
+class Order(db.Model):
+    __tablename__ = "order"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    email: Mapped[str] = mapped_column(String(50), nullable=False)
+    amount: Mapped[float] = mapped_column(Float, nullable=False)
+    reference: Mapped[str] = mapped_column(String(50), nullable=False)
+    status: Mapped[str] = mapped_column(String(20), nullable=False)
+    paid_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
+
+    # Foreign keys
+    user_id: Mapped[int] = mapped_column(Integer, ForeignKey("user.id"), nullable=False)
+    collection_id: Mapped[int] = mapped_column(Integer, ForeignKey("store_collection.id"), nullable=False)
+
+    # Relationships
+    user: Mapped["User"] = relationship("User", back_populates="orders")
+    collection: Mapped["StoreCollection"] = relationship("StoreCollection", back_populates="orders")
+
 
 # Allowed file extensions
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp'}
@@ -206,7 +240,7 @@ def edit_collection(collection_id):
                     selected_collection.mimetype = file.mimetype
             try:
                 db.session.commit()
-                # flash('Collection updated successfully!')
+                flash("Collection updated successfully!")
                 return redirect(url_for("shop"))
             except Exception as e:
                 flash(f"Error updating collection: {str(e)}")
@@ -243,24 +277,6 @@ def checkout_page(collection_id):
                            collection=selected_collection,
                            paystack_key=PAYSTACK_SECRET_KEY)
 
-# @app.route("/success")
-# def success():
-#     return render_template("success.html")
-
-@app.route("/blog")
-def blog():
-    return render_template("blog.html")
-
-@app.route("/contact")
-def contact():
-    return render_template("contact.html")
-
-@app.route("/about")
-def about():
-    return render_template("about.html")
-
-
-
 
 @app.route("/process-payment", methods=["POST"])
 def process_payment():
@@ -282,19 +298,19 @@ def process_payment():
             )
 
             if result.get("status"):
-                # Store order in database (optional)
-                # order = Order(
-                #     product_id=product_id,
-                #     email=email,
-                #     amount=total_amount,
-                #     reference=result['data']['reference'],
-                #     status='pending'
-                # )
-                # db.session.add(order)
-                # db.session.commit()
+                # Store order in database
+                new_order = Order(
+                    collection_id=collection_id,
+                    email=email,
+                    amount=total_amount,
+                    reference=result["data"]["reference"],
+                    status="pending",
+                    user_id=current_user.id
+                )
+                db.session.add(new_order)
+                db.session.commit()
 
                 # Redirect to Paystack
-                # return redirect(url_for("success"))
                 return redirect(result["data"]["authorization_url"])
             else:
                 flash("Payment initialization failed. Please try again.")
@@ -318,12 +334,12 @@ def payment_callback():
     result = paystack.verify_transaction(reference)
 
     if result.get("status") and result["data"]["status"] == "success":
-        # Payment successful - update your database
-        # order = Order.query.filter_by(reference=reference).first()
-        # if order:
-        #     order.status = 'completed'
-        #     order.paid_at = datetime.now()
-        #     db.session.commit()
+        # Payment successful - update database
+        order = db.session.execute(select(Order).where(Order.reference == reference)).scalar_one_or_none()
+        if order:
+            order.status = "completed"
+            order.paid_at = datetime.now()
+            db.session.commit()
 
         flash("Payment successful! Your order has been confirmed.")
         return render_template("success.html",
@@ -333,11 +349,17 @@ def payment_callback():
         return render_template("payment_failed.html")
 
 
-@app.route("/verify-payment/<reference>")
-def verify_payment_ajax(reference):
-    """AJAX endpoint to verify payment status"""
-    result = paystack.verify_transaction(reference)
-    return jsonify(result)
+@app.route("/blog")
+def blog():
+    return render_template("blog.html")
+
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
+
+@app.route("/about")
+def about():
+    return render_template("about.html")
 
 
 
