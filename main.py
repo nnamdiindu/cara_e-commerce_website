@@ -48,9 +48,9 @@ class User(UserMixin, db.Model):
     __tablename__ = "user"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    name: Mapped[str] = mapped_column(String(150), nullable=False)
-    email: Mapped[str] = mapped_column(String(150), unique=True, nullable=False)
-    password: Mapped[str] = mapped_column(String(150), nullable=False)
+    name: Mapped[str] = mapped_column(String(100), nullable=False)
+    email: Mapped[str] = mapped_column(String(320), unique=True, nullable=False)
+    password: Mapped[str] = mapped_column(String(255), nullable=False)
     create_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
 
     # Relationship to orders
@@ -61,7 +61,7 @@ class StoreCollection(db.Model):
     __tablename__ = "store_collection"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    brand_name: Mapped[str] = mapped_column(String(150), nullable=False)
+    brand_name: Mapped[str] = mapped_column(String(100), nullable=False)
     description: Mapped[str] = mapped_column(String(200), nullable=False)
     filename: Mapped[str] = mapped_column(String(100), nullable=False)
     amount: Mapped[float] = mapped_column(Float, nullable=False)
@@ -76,10 +76,10 @@ class Order(db.Model):
     __tablename__ = "order"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    email: Mapped[str] = mapped_column(String(50), nullable=False)
+    email: Mapped[str] = mapped_column(String(320), nullable=False)
     amount: Mapped[float] = mapped_column(Float, nullable=False)
-    reference: Mapped[str] = mapped_column(String(150), nullable=False)
-    status: Mapped[str] = mapped_column(String(20), nullable=False)
+    reference: Mapped[str] = mapped_column(String(322), nullable=False)
+    status: Mapped[str] = mapped_column(String(100), nullable=False)
     paid_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
 
     # Foreign keys
